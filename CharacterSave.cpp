@@ -49,20 +49,12 @@ void CharacterSave::LoadData(const QString &i_savePath)
 	dataIndex += 72;
 	stopCharacter = QChar(34);
 	QString characterName;
-	bool finishGetName = false;
 	while (true)
 	{
 		dataView = QChar(m_saveData.at(dataIndex));
-		if (finishGetName)
+		if (dataView == k_emptyChar && m_saveData.at(dataIndex + 1) <= k_checkSymbolChar)
 		{
-			if (dataView > k_checkSymbolChar && dataView != stopCharacter)
-			{
-				break;
-			}
-		}
-		else if (dataView == k_emptyChar && m_saveData.at(dataIndex - 1) == k_emptyChar)
-		{
-			finishGetName = true;
+			break;
 		}
 		else if (dataView > k_checkSymbolChar)
 		{
@@ -75,7 +67,7 @@ void CharacterSave::LoadData(const QString &i_savePath)
 	//
 
 	//Check live or dead
-	dataIndex += 94;
+	dataIndex += 103;
 	m_isDead = QChar(m_saveData.at(dataIndex)) == k_emptyChar
 			&& QChar(m_saveData.at(dataIndex + 1)) == k_emptyChar;
 	m_deadStatusIndex = dataIndex;
