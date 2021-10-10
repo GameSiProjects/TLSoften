@@ -1,5 +1,2 @@
 # TLSoften
-A simple tool to revive Torchlight hardcore characters
-
-# Introduction
-This is a small tool, built with Qt5.
+It's a simple, start-forward tool to revive Torchlight hardcore characters, built with Qt5.
