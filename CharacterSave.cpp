@@ -123,7 +123,7 @@ QString CharacterSave::GetNewUniqueFileName(QString& i_oldName, QString i_suffix
 	unsigned int renameNewFileAttemp = 0;
 	while (QFile::exists(desiredName))
 	{
-		desiredName = i_oldName + renameNewFileAttemp + i_suffix;
+		desiredName = i_oldName + QString::number(renameNewFileAttemp) + i_suffix;
 		renameNewFileAttemp++;
 	}
 	return desiredName;
