@@ -101,16 +101,17 @@ void CharacterSave::Revive()
 	//Modify save data
 	m_saveData.replace(m_deadStatusIndex, 2, "HC");
 	//Save as new file
-	QSaveFile file(GetNewUniqueFileName(m_savePath, "new"));
+	QString newSaveName = GetNewUniqueFileName(m_savePath, ".new");
+	QSaveFile file(newSaveName);
 	file.open(QIODevice::WriteOnly);
 	file.write(m_saveData);
 	file.commit();
 	//Rename the old file
 	QFile oldSaveFile(m_savePath);
-	QString desiredNameForOldFile = GetNewUniqueFileName(m_savePath, "old");
+	QString desiredNameForOldFile = GetNewUniqueFileName(m_savePath, ".old");
 	oldSaveFile.rename(desiredNameForOldFile);
 	//Rename the new file
-	QFile newSaveFile(m_savePath + "new");
+	QFile newSaveFile(newSaveName);
 	newSaveFile.rename(m_savePath);
 
 	m_isDead = false;
@@ -122,7 +123,7 @@ QString CharacterSave::GetNewUniqueFileName(QString& i_oldName, QString i_suffix
 	unsigned int renameNewFileAttemp = 0;
 	while (QFile::exists(desiredName))
 	{
-		desiredName = i_oldName + renameNewFileAttemp;
+		desiredName = i_oldName + renameNewFileAttemp + i_suffix;
 		renameNewFileAttemp++;
 	}
 	return desiredName;
