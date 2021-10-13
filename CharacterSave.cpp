@@ -22,7 +22,7 @@ void CharacterSave::LoadData(const QString &i_savePath)
 	m_saveData = file.readAll();
 
 	const QChar k_emptyChar = QChar(0);
-	const QChar k_checkSymbolChar = QChar(31);
+	const QChar k_checkSymbolChar = QChar(32);
 	QString className;
 	QChar stopCharacter = QChar(222);
 	unsigned int dataIndex = 0;
@@ -52,7 +52,7 @@ void CharacterSave::LoadData(const QString &i_savePath)
 	while (true)
 	{
 		dataView = QChar(m_saveData.at(dataIndex));
-		if (dataView == k_emptyChar && m_saveData.at(dataIndex + 1) <= k_checkSymbolChar)
+		if (dataView <= k_checkSymbolChar && m_saveData.at(dataIndex + 1) <= k_checkSymbolChar)
 		{
 			break;
 		}
