@@ -5,6 +5,7 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <QTabWidget>
+#include <QPushButton>
 
 #include "CharacterSave.h"
 
@@ -25,5 +26,6 @@ private:
 	QLabel* m_noCharacterLabel;
 	QTabWidget* m_charactersTabWidget;
 	QList<CharacterSave*> m_charactersSaves;
+	QPushButton* m_refreshButton;
 };
 #endif // MAINWINDOW_H

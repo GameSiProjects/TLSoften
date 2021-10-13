@@ -3,7 +3,6 @@
 
 #include <QGroupBox>
 #include <QVBoxLayout>
-#include <QPushButton>
 #include <QProcessEnvironment>
 #include <QFileDialog>
 #include <QDirIterator>
@@ -42,10 +41,13 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 	m_charactersTabWidget = new QTabWidget(charactersGroupBox);
-	//m_charactersTabWidget->setTabShape()
+
+	m_refreshButton = new QPushButton("Refresh");
+	connect(m_refreshButton, &QPushButton::released, this, &MainWindow::UpdateSaveFiles);
 
 	charactersLayout->addWidget(m_noCharacterLabel);
 	charactersLayout->addWidget(m_charactersTabWidget);
+	charactersLayout->addWidget(m_refreshButton);
 
 	charactersGroupBox->setLayout(charactersLayout);
 	mainLayout->addWidget(charactersGroupBox);
@@ -110,6 +112,7 @@ void MainWindow::UpdateSaveFiles()
 	ClearSaveFiles();
 	LoadSaveFiles(m_saveFolderEdit->text());
 
+	bool foundSaveFile = false;
 	if (m_charactersSaves.size() > 0)
 	{
 		foreach (CharacterSave* save, m_charactersSaves)
@@ -122,14 +125,12 @@ void MainWindow::UpdateSaveFiles()
 
 			m_charactersTabWidget->addTab(new CharacterTab(save, m_charactersTabWidget), tabName);
 		}
-		m_noCharacterLabel->setVisible(false);
-		m_charactersTabWidget->setVisible(true);
+		foundSaveFile = true;
 	}
-	else
-	{
-		m_noCharacterLabel->setVisible(true);
-		m_charactersTabWidget->setVisible(false);
-	}
+
+	m_noCharacterLabel->setVisible(!foundSaveFile);
+	m_charactersTabWidget->setVisible(foundSaveFile);
+	m_refreshButton->setVisible(foundSaveFile);
 }
 
 void MainWindow::ClearSaveFiles()
